@@ -1,28 +1,34 @@
-# Getting Started with Terraform
+# Getting Started with Terraform on Windows 10
+
+[![Installing Terraform on Windows 10](http://img.youtube.com/vi/X7XrHvW1w3c/0.jpg)](http://www.youtube.com/watch?v=X7XrHvW1w3c)
 
 Terraform is a tool for defining and provisioning infrastructure as code (IaC). You can use Terraform to deploy a consistent infrastructure platform with predictable results every time. In this guide, you will install Terraform on your computer, and then you will create and destroy a Docker container.
 
 ## Prerequisites
 
-- A workstation running Windows 10, MacOS, Linux, FreeBSD, OpenBSD, or Solaris
-- [Docker](https://docs.docker.com/engine/install/)
+- Computer with Windows 10 updated version 2004
+- [Windows Subsystem for Linux version 2 (WSL2)](https://aka.ms/wsl2kernel)
+- [Docker Desktop](https://docs.docker.com/engine/install/)
 
 ## Install Terraform
 
-To install Terraform, visit [Terraform.io](https://www.terraform.io/downloads.html) and download the ZIP file that is compatible with your workstation. Extract the `terraform` application file. The file will need to be added to your `PATH` to allow you to run the program from any location on your workstation.
+To install Terraform, visit [Terraform.io](https://www.terraform.io/downloads.html) and download the package compatible with your computer. During the extraction process you will create a new folder, for example `C:\HashiCorp\Terraform`. Extract the `terraform.exe` file in this folder.
 
-```shell
-$ echo PATH
-```
-Then move the Terraform application file to a folder in the PATH location.
+## Create PATH Variable on Windows
+
+Adding Terraform to the PATH environmental variable will allow you to run `terraform` from the command prompt.
+- Search the Windows Start menu for the **Advanced System Settings**
+- On the Advanced tab, select **Environment Variables...**
+- Click on **Path** and then **Edit**
+- Click **New** and enter the path to the `terraform.exe` file
+- Close and reopen any open command prompt windows
 
 Finally, test Terraform from the command prompt.
 ```shell
 terraform -help
 ```
 If you see the following output, the installation is complete.
-
-```
+```hcl
 Usage: terraform [-version] [-help] <command> [args]
 
 The available commands for execution are listed below.
@@ -31,6 +37,9 @@ less common or more advanced commands. If you're just getting
 started with Terraform, stick with the common commands. For the
 other commands, please read the help and docs before usage.
 ```
+## Troubleshoot
+If Windows returns `'terraform' is not recognized as an internal or external command,
+operable program or batch file.` you may need to close and reopen the command prompt.
 
 Now that you have installed Terraform, you can create a folder and deploy a test environment.
 
@@ -39,22 +48,22 @@ Now that you have installed Terraform, you can create a folder and deploy a test
 A working folder is a folder on your computer which holds Terraform files for a project. Use the command prompt to create the working folder.
 
 ```shell
-$ mkdir terraform-demo
-$ cd terraform-demo
+mkdir terraform-demo
+cd terraform-demo
 ```
 
 Next, create a file for your Terraform configuration code.
-
 ## Create Terraform Main File
-```shell
-$ touch main.tf
+
+```hcf
+start notepad main.tf
 ```
 
-Paste the following lines into the file.
+Paste the following lines into the file and save.
 
 ```hcl
 provider "docker" {
-    host = "unix:///var/run/docker.sock"
+    host = "tcp://localhost:2375"
 }
 
 resource "docker_container" "nginx" {
@@ -72,15 +81,14 @@ resource "docker_image" "nginx" {
 ```
 
 ## Initialize Terraform Environment
-Initialize Terraform with the `init` command. This will install the Docker provider and allow you to work with additional Terraform commands.
+Initialize Terraform with the `init` command. This will install the Docker provider and allow you to work with Terraform commands.
 
 ```shell
 $ terraform init
 ```
-
 The output should display as follows.
 
-```
+```hcl
 Initializing the backend...
 
 Initializing provider plugins...
@@ -194,10 +202,10 @@ Once the process is complete it will display a message indicating that it create
 ## Destroy Terraform Environment
 Once you have confirmed the deployment succeeded, destroy the infrastructure.
 
-
 ```shell
 $ terraform destroy
 ```
+
 Look for a message are the bottom of the output asking for confirmation. Type `yes` and hit ENTER. Terraform will destroy the resources it had created earlier.
 
 The output is as follows:
