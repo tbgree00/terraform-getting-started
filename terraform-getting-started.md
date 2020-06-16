@@ -1,6 +1,6 @@
 # Getting Started with Terraform
 
-Terraform is a tool for defining and provisioning infrastructure as code (IaC). You can use Terraform to deploy a consistent infrastructure platform with predictable results every time. In this guide, you will install Terraform on your computer, and then you will create and destroy a Docker container.
+Terraform is a tool for defining and provisioning infrastructure as code. You can use it to build, deply, and redeploy environments in a repeatable manner. In this guide, you will install Terraform on your computer, and then you will create and destroy a Docker container.
 
 ## Prerequisites
 
@@ -11,10 +11,19 @@ Terraform is a tool for defining and provisioning infrastructure as code (IaC). 
 
 To install Terraform, visit [Terraform.io](https://www.terraform.io/downloads.html) and download the ZIP file that is compatible with your workstation. Extract the `terraform` application file. The file will need to be added to your `PATH` to allow you to run the program from any location on your workstation.
 
+In Linux, you can use the following command to check the list of folders in your `PATH`.
 ```shell
-$ echo PATH
+$ echo $PATH
 ```
-Then move the Terraform application file to a folder in the PATH location.
+The output may be similar to this
+```shell
+$ usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
+
+Next, move the `terraform` application file to a folder listed in the `PATH` output.
+```shell
+$ mv terraform usr/local/bin/terraform
+```
 
 Finally, test Terraform from the command prompt.
 ```shell
@@ -118,7 +127,7 @@ $ terraform apply
 The output will detail the environment configuration. At the bottom of the output it asks for confirmation. Type `yes` and hit ENTER. Terraform will create the environment.
 
 The expected output is as follows:
-```hcl
+```
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
   + create
@@ -201,7 +210,7 @@ $ terraform destroy
 Look for a message are the bottom of the output asking for confirmation. Type `yes` and hit ENTER. Terraform will destroy the resources it had created earlier.
 
 The output is as follows:
-```hcl
+```
 docker_image.nginx: Refreshing state... [id=sha256:2622e6cca7ebbb6e310743abce3fc47335393e79171b9d76ba9d4f446ce7b163nginx:latest]
 docker_container.nginx: Refreshing state... [id=b4c56384b514adc77db44b0e52e1790573be76cf44df56c2efa22ea1e4db7d1c]
 
